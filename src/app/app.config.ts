@@ -10,6 +10,7 @@ export const appConfig: ApplicationConfig = {
 
     provideRouter(routes, withComponentInputBinding(), withViewTransitions()),
 
+    // with fetch, hisotrically using xhr, with this option using the fetch apis
     provideHttpClient(withFetch()),
   ],
 };
