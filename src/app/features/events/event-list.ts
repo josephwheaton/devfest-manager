@@ -32,6 +32,7 @@ import { EventsService } from '../../core/events.service';
           <app-event-card
             [title]="event.title"
             [image]="event.image"
+            [id]="event.id"
             [date]="event.date"
             (delete)="deleteEvent(event.id)"
           />
