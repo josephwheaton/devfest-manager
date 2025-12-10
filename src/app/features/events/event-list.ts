@@ -1,14 +1,15 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { EventCard } from './event-card';
 import { SearchBar } from './search-bar';
 import { EventsService } from '../../core/events.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-event-list',
   imports: [EventCard, SearchBar],
   template: `
     <div class="mb-8">
-      <h1 class="text-3xl font-bold text-gray-900 mb-4">Upcoming Events</h1>
+      <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ title() }}</h1>
       <app-search-bar [(query)]="searchQuery" />
     </div>
 
@@ -48,8 +49,16 @@ export class EventList {
 
   readonly console = console; // popular technique for also bringing enums to the template
   searchQuery = signal('');
+  title = signal('Upcoming Events');
   // TODO Mod 2: Inject Service and use resource()
   readonly events = this.eventsService.getEventsResource(this.searchQuery);
+
+  // quick change detection example:
+  // constructor() {
+  //   setTimeout(() => {
+  //     this.title.set('Test test');
+  //   }, 5000);
+  // }
 
   deleteEvent(id: string) {
     if (!confirm('Are you sure?')) return;

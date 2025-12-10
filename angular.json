@@ -25,8 +25,15 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.css"],
-            "polyfills": ["zone.js"]
+            "styles": [
+              "src/styles.css"
+            ],
+            "polyfills": [],
+            "server": "src/main.server.ts",
+            "outputMode": "server",
+            "ssr": {
+              "entry": "src/server.ts"
+            }
           },
           "configurations": {
             "production": {

@@ -44,7 +44,233 @@
       "speakers": [],
       "image": "/images/event4.png",
       "id": "KJiYaDa"
+    },
+    {
+      "title": "asdf",
+      "description": "asfasdfasdf",
+      "date": "2025-12-10T15:52",
+      "location": "everywhere",
+      "speakers": [],
+      "image": "/images/event4.png",
+      "id": "jdS6c_I"
     }
   ],
-  "tickets": []
+  "tickets": [
+    {
+      "eventId": "1",
+      "id": 1
+    },
+    {
+      "eventId": "1",
+      "id": 2
+    },
+    {
+      "eventId": "1",
+      "id": 3
+    },
+    {
+      "eventId": "1",
+      "id": 4
+    },
+    {
+      "eventId": "1",
+      "id": 5
+    },
+    {
+      "eventId": "1",
+      "id": 6
+    },
+    {
+      "eventId": "1",
+      "id": 7
+    },
+    {
+      "eventId": "3",
+      "id": 8
+    },
+    {
+      "eventId": "3",
+      "id": 9
+    },
+    {
+      "eventId": "3",
+      "id": 10
+    },
+    {
+      "eventId": "3",
+      "id": 11
+    },
+    {
+      "eventId": "3",
+      "id": 12
+    },
+    {
+      "eventId": "3",
+      "id": 13
+    },
+    {
+      "eventId": "3",
+      "id": 14
+    },
+    {
+      "eventId": "3",
+      "id": 15
+    },
+    {
+      "eventId": "3",
+      "id": 16
+    },
+    {
+      "eventId": "3",
+      "id": 17
+    },
+    {
+      "eventId": "3",
+      "id": 18
+    },
+    {
+      "eventId": "3",
+      "id": 19
+    },
+    {
+      "eventId": "3",
+      "id": 20
+    },
+    {
+      "eventId": "3",
+      "id": 21
+    },
+    {
+      "eventId": "3",
+      "id": 22
+    },
+    {
+      "eventId": "3",
+      "id": 23
+    },
+    {
+      "eventId": "3",
+      "id": 24
+    },
+    {
+      "eventId": "3",
+      "id": 25
+    },
+    {
+      "eventId": "3",
+      "id": 26
+    },
+    {
+      "eventId": "3",
+      "id": 27
+    },
+    {
+      "eventId": "3",
+      "id": 28
+    },
+    {
+      "eventId": "3",
+      "id": 29
+    },
+    {
+      "eventId": "3",
+      "id": 30
+    },
+    {
+      "eventId": "3",
+      "id": 31
+    },
+    {
+      "eventId": "3",
+      "id": 32
+    },
+    {
+      "eventId": "3",
+      "id": 33
+    },
+    {
+      "eventId": "3",
+      "id": 34
+    },
+    {
+      "eventId": "1",
+      "id": 35
+    },
+    {
+      "eventId": "1",
+      "id": 36
+    },
+    {
+      "eventId": "1",
+      "id": 37
+    },
+    {
+      "eventId": "1",
+      "id": 38
+    },
+    {
+      "eventId": "1",
+      "id": 39
+    },
+    {
+      "eventId": "1",
+      "id": 40
+    },
+    {
+      "eventId": "1",
+      "id": 41
+    },
+    {
+      "eventId": "1",
+      "id": 42
+    },
+    {
+      "eventId": "1",
+      "id": 43
+    },
+    {
+      "eventId": "1",
+      "id": 44
+    },
+    {
+      "eventId": "1",
+      "id": 45
+    },
+    {
+      "eventId": "1",
+      "id": 46
+    },
+    {
+      "eventId": "1",
+      "id": 47
+    },
+    {
+      "eventId": "1",
+      "id": 48
+    },
+    {
+      "eventId": "1",
+      "id": 49
+    },
+    {
+      "eventId": "1",
+      "id": 50
+    },
+    {
+      "eventId": "1",
+      "id": 51
+    },
+    {
+      "eventId": "1",
+      "id": 52
+    },
+    {
+      "eventId": "1",
+      "id": 53
+    },
+    {
+      "eventId": "1",
+      "id": 54
+    }
+  ]
 }

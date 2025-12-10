@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { DevFestEvent } from '../../models/event.model';
 import { debounce, disabled, Field, form, minLength, required } from '@angular/forms/signals';
 import { EventsService } from '../../core/events.service';
@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 interface CreateEventForm extends Omit<DevFestEvent, 'id'> {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-create-event',
   imports: [Field],
   template: `

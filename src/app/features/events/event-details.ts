@@ -1,9 +1,11 @@
-import { Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { EventsService } from '../../core/events.service';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CartService } from '../../core/cart.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-event-details',
   imports: [DatePipe, RouterLink],
   template: `
@@ -46,6 +48,7 @@ import { RouterLink } from '@angular/router';
             </div>
 
             <button
+              (click)="addToCart()"
               class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 shadow-lg transition"
             >
               Buy Tickets
@@ -57,9 +60,15 @@ import { RouterLink } from '@angular/router';
   `,
 })
 export class EventDetails {
+  private readonly cartService = inject(CartService);
+
   readonly id = input.required<string>();
 
   readonly eventsService = inject(EventsService);
 
   readonly eventResource = this.eventsService.getEventResource(this.id);
+
+  addToCart() {
+    this.cartService.addTicket(this.id());
+  }
 }
