@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { TICKETS_URL } from './tokens';
 
 // Shape of data from json-server
-interface TicketEntry {
+export interface TicketEntry {
   id: string; // database ID
   eventId: string; // our actual event ID
 }

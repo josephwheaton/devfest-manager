@@ -1,10 +1,23 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, DestroyRef, inject, input } from '@angular/core';
 import { EventsService } from '../../core/events.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../core/cart.service';
 import { TabGroup } from '../../shared/tabs/tab-group';
 import { Tab } from '../../shared/tabs/tab';
+import {
+  catchError,
+  concatMap,
+  delay,
+  exhaustMap,
+  mergeMap,
+  of,
+  Subject,
+  switchMap,
+  throwError,
+} from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CartStore } from '../../core/cart.store';
 
 @Component({
   selector: 'app-event-details',
@@ -98,13 +111,18 @@ import { Tab } from '../../shared/tabs/tab';
             @defer (hydrate on interaction) {
               <button
                 (click)="addToCart()"
-                class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 shadow-lg transition active:scale-95"
+                [disabled]="cartStore.isPending()"
+                class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 shadow-lg transition active:scale-95 disabled:opacity-50 disabled:cursor-wait"
               >
                 Buy Ticket
               </button>
             } @placeholder {
               <button class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold opacity-90">
-                Buy Ticket
+                @if (cartStore.isPending()) {
+                  Syncing...
+                } @else {
+                  Buy Ticket
+                }
               </button>
             }
           </div>
@@ -114,14 +132,41 @@ import { Tab } from '../../shared/tabs/tab';
   `,
 })
 export class EventDetails {
+  readonly destroy = inject(DestroyRef);
+
+  private buyBtnClick$ = new Subject<void>();
+
+  constructor() {
+    this.buyBtnClick$
+      .pipe(
+        // STRATEGY: We will change this operator in Step 2
+        exhaustMap(() => {
+          console.log('🔄 Transaction Started...');
+          // Simulate a 2-second backend request
+          // return of('✅ Transaction Complete').pipe(delay(2000));
+          return throwError(() => new Error('Credit Card Declined')).pipe(
+            delay(500),
+            catchError(() => of('Caught')),
+          );
+        }),
+        // takeUntilDestroyed(), // Auto-unsubscribe
+      )
+      .subscribe({
+        next: (result) => console.log(`${result}`),
+        error: (err) => console.error('💀 Stream Died:', err),
+      });
+  }
+
   private readonly eventsService = inject(EventsService);
   private readonly cartService = inject(CartService);
+  readonly cartStore = inject(CartStore);
 
   readonly id = input.required<string>();
 
   readonly eventResource = this.eventsService.getEventResource(this.id);
 
   addToCart() {
-    this.cartService.addTicket(this.id());
+    // this.buyBtnClick$.next();
+    this.cartStore.addToCart({ eventId: this.id() });
   }
 }
