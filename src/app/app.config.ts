@@ -4,7 +4,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { routes } from './app.routes';
 import { API_URL } from './core/tokens';
 import { IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { provideClientHydration, withIncrementalHydration } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,6 +25,7 @@ export const appConfig: ApplicationConfig = {
 
     // with fetch, hisotrically using xhr, with this option using the fetch apis
     provideHttpClient(withFetch()),
-    { provide: API_URL, useValue: 'http://localhost:3000' }, provideClientHydration(withEventReplay()),
+    { provide: API_URL, useValue: 'http://localhost:3000' },
+    provideClientHydration(withIncrementalHydration()),
   ],
 };
