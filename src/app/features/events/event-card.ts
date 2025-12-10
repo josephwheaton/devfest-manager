@@ -2,9 +2,16 @@ import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { Component, computed, input, linkedSignal, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { UiCard } from '../../shared/ui-card';
+import { ClickLogger } from '../../shared/directives/click-logger';
 
 @Component({
   selector: 'app-event-card',
+  hostDirectives: [
+    {
+      directive: ClickLogger,
+      inputs: ['eventName: trackingId'],
+    },
+  ],
   imports: [DatePipe, RouterLink, NgOptimizedImage, UiCard],
   template: `
     <app-ui-card>

@@ -1,5 +1,5 @@
 // src/app/shared/tabs/tab-group.ts
-import { Component, contentChildren, inject, effect } from '@angular/core';
+import { Component, contentChildren, inject, effect, AfterContentInit } from '@angular/core';
 import { TabState } from './tab-state';
 import { Tab } from './tab';
 
@@ -29,20 +29,30 @@ import { Tab } from './tab';
     <ng-content />
   `,
 })
-export class TabGroup {
+export class TabGroup implements AfterContentInit {
   readonly state = inject(TabState);
 
   // Query all child <app-tab> components
+  // view: immediate template, content: projected content
   readonly tabs = contentChildren(Tab);
 
-  constructor() {
-    // Select the first tab automatically when tabs load
-    effect(() => {
-      const allTabs = this.tabs();
-      if (allTabs.length > 0 && !this.state.activeTab()) {
-        this.state.activate(allTabs[0].label());
-      }
-    });
+  //   constructor() {
+  //     // Select the first tab automatically when tabs load
+  //     effect(() => {
+  //       const allTabs = this.tabs();
+  //       if (allTabs.length > 0 && !this.state.activeTab()) {
+  //         this.state.activate(allTabs[0].label());
+  //       }
+  //     });
+  //   }
+
+  // some suggest that lifecycle hooks may become less useful
+  // this and after changed, view too, might be useful, some people
+  // are trying to replace with afterNextRender, may be used in constructor, ssr friendly
+
+  ngAfterContentInit() {
+    const allTabs = this.tabs();
+    this.state.activate(allTabs[0].label());
   }
 
   activate(label: string) {

@@ -3,10 +3,12 @@ import { EventsService } from '../../core/events.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../core/cart.service';
+import { TabGroup } from '../../shared/tabs/tab-group';
+import { Tab } from '../../shared/tabs/tab';
 
 @Component({
   selector: 'app-event-details',
-  imports: [CommonModule, RouterLink, DatePipe],
+  imports: [CommonModule, RouterLink, DatePipe, TabGroup, Tab],
   template: `
     <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto min-h-[600px]">
       <!-- Back Button -->
@@ -33,10 +35,57 @@ import { CartService } from '../../core/cart.service';
           <!-- Left: Content -->
           <div class="md:col-span-2 space-y-4">
             <h1 class="text-4xl font-bold text-gray-900">{{ event.title }}</h1>
-            <p class="text-gray-500 text-lg">
-              {{ event.date | date: 'fullDate' }} • {{ event.location }}
-            </p>
-            <p class="text-gray-700 leading-relaxed text-lg">{{ event.description }}</p>
+
+            <app-tab-group>
+              <app-tab label="Overview">
+                <p class="text-gray-700 leading-relaxed text-lg">{{ event.description }}</p>
+              </app-tab>
+              <app-tab label="Venue">
+                <p class="text-gray-500 text-lg">
+                  {{ event.date | date: 'fullDate' }} • {{ event.location }}
+                </p>
+
+                <div class="bg-gray-50 p-6 rounded-xl h-fit border border-gray-100">
+                  <!-- 
+      @defer (hydrate on viewport) 
+      SSR Behavior: The SERVER renders the @placeholder content (or the main content if compatible).
+      Hydration Behavior: The browser downloads the JS for this block ONLY when it enters the viewport.
+   -->
+                  @defer (hydrate on viewport) {
+                    <div class="h-140 bg-gray-200 rounded mb-4 overflow-hidden relative">
+                      <img [src]="'/images/venue-map.png'" class="w-full h-full object-cover" />
+                    </div>
+                  } @placeholder {
+                    <!-- Rendered instantly on Server, visible immediately -->
+                    <div
+                      class="h-140 bg-gray-100 rounded mb-4 flex items-center justify-center border-2 border-dashed border-gray-300"
+                    >
+                      <span class="text-gray-400">Map Loading...</span>
+                    </div>
+                  }
+                </div>
+              </app-tab>
+              <app-tab label="Speakers">
+                @if (event.speakers.length > 0) {
+                  <ul class="space-y-3">
+                    @for (speaker of event.speakers; track speaker) {
+                      <li class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                        <div
+                          class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold"
+                        >
+                          {{ speaker.charAt(0) }}
+                        </div>
+                        <span class="text-gray-700 font-medium">{{ speaker }}</span>
+                      </li>
+                    }
+                  </ul>
+                } @else {
+                  <div class="p-4 bg-yellow-50 text-yellow-800 rounded">
+                    Speaker list coming soon.
+                  </div>
+                }
+              </app-tab>
+            </app-tab-group>
           </div>
 
           <!-- Right: Actions -->
@@ -61,31 +110,6 @@ import { CartService } from '../../core/cart.service';
           </div>
         </div>
       }
-
-      <!-- large spacer that pushes the map below the fold (deferred). -->
-      <div class="h-96 p-12">
-        <p>Check the venue details below</p>
-      </div>
-
-      <div class="bg-gray-50 p-6 rounded-xl h-fit border border-gray-100">
-        <!-- 
-      @defer (hydrate on viewport) 
-      SSR Behavior: The SERVER renders the @placeholder content (or the main content if compatible).
-      Hydration Behavior: The browser downloads the JS for this block ONLY when it enters the viewport.
-   -->
-        @defer (hydrate on viewport) {
-          <div class="h-140 bg-gray-200 rounded mb-4 overflow-hidden relative">
-            <img [src]="'/images/venue-map.png'" class="w-full h-full object-cover" />
-          </div>
-        } @placeholder {
-          <!-- Rendered instantly on Server, visible immediately -->
-          <div
-            class="h-140 bg-gray-100 rounded mb-4 flex items-center justify-center border-2 border-dashed border-gray-300"
-          >
-            <span class="text-gray-400">Map Loading...</span>
-          </div>
-        }
-      </div>
     </div>
   `,
 })
